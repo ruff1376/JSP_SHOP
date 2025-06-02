@@ -13,7 +13,18 @@ public class OrderRepository extends JDBConnection {
 	 * @return
 	 */
 	public int insert(Order order) {
+		int result = 0;
 		
+		try {
+			String sql = "INSERT INTO "
+					+ "order(orderNo, cartId, shipName, zipCode, country, address, date, userId, totalPrice, phone, orderPw)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	/**
@@ -31,7 +42,7 @@ public class OrderRepository extends JDBConnection {
 	 * @return
 	 */
 	public List<Product> list(String userId) {
-
+		
 	}
 	
 	/**
