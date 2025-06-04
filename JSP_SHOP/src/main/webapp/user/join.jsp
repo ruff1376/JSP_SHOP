@@ -16,7 +16,7 @@
 	
 	<!-- 회원 가입 영역 -->
 	<div class="container shop p-5 mb-5" >
-		<form action="join_pro.jsp" name="joinForm" method="post" >
+		<form action="join_pro.jsp" name="joinForm" method="post" onsubmit="return checkJoin()">
 		
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-4" id="">아이디</label>
@@ -134,13 +134,12 @@
 			<div class="d-grid gap-2 mt-5 mb-5 d-md-flex justify-content-md-between">
 				<a href="javascript: history.back()" class="btn btn-lg btn-secondary">취소</a>
 				<input type="submit" class="btn btn-lg btn-primary" value="가입" />
-			</div>	
+			</div>
 			
 			
 		</form>
 	
 	</div>
-	
 	
 	<jsp:include page="/layout/footer.jsp" />
 	<jsp:include page="/layout/script.jsp" />
