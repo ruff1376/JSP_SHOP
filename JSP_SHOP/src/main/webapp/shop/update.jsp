@@ -1,11 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/layout/meta.jsp"%>
+<%@ page import="shop.dao.ProductRepository, shop.dto.Product" %>
+
+<%
+    String productId = request.getParameter("id");
+    if (productId == null || productId.trim().isEmpty()) {
+        out.println("<script>alert('상품 코드가 없습니다.'); location.href='products.jsp';</script>");
+        return;
+    }
+    
+    ProductRepository dao = new ProductRepository();
+    Product product = dao.getProductById(productId);
+    
+    if (product == null) {
+        out.println("<script>alert('상품 정보를 찾을 수 없습니다.'); location.href='products.jsp';</script>");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>update</title>
-	<jsp:include page="/layout/meta.jsp" />
 	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>
@@ -23,7 +40,7 @@
 		<form name="product" action="./update_pro.jsp" onsubmit="return checkProduct()" method="post" enctype="multipart/form-data">
 			
 			<div class="input-group mb-3 row">
-				<img src="img?id=P100002" class="w-100 p-2" />
+				<img src="img?id=<%=product.getProductId()%>" class="w-100 p-2" />
 			</div>
 			
 				
@@ -35,39 +52,39 @@
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">상품 코드</label>
 				<input type="text" class="form-control col-md-10" name="productId" 
-						value="P100002" readonly>
+						value="<%=product.getProductId()%>" readonly>
 			</div>
 			
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">상품명</label>
 				<input type="text" class="form-control col-md-10" name="name"
-						value="오라클 데이터베이스" >
+						value="<%=product.getName()%>" >
 			</div>
 			
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">가격</label>
 				<input type="number" class="form-control col-md-10" name="unitPrice"
-						value="20000" >
+						value="<%=product.getUnitPrice()%>" >
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text w-100" id="">상세 정보</label>
 				<textarea class="form-control" name="description" style="height: 200px !important;"
-						>오라클 데이터베이스 입니다.</textarea>
+						><%=product.getDescription()%></textarea>
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">제조사</label>
 				<input type="text" class="form-control col-md-10" name="manufacturer"
-						value="알로하클래스" >
+						value="<%=product.getManufacturer()%>" >
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">분류</label>
 				<input type="text" class="form-control col-md-10" name="category"
-						value="강의" >
+						value="<%=product.getCategory()%>" >
 			</div>
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">재고 수</label>
 				<input type="number" class="form-control col-md-10" name="unitsInStock"
-						value="96" >
+						value="<%=product.getUnitsInStock()%>" >
 			</div>
 			<div class="input-group mb-3 row">
 				<div class="col-md-2 p-0">
@@ -76,17 +93,20 @@
 				<div class="col-md-10 d-flex align-items-center">
 					<div class="radio-box d-flex">
 						<div class="radio-item mx-5">
-							<input type="radio" class="form-check-input" name="condition" value="NEW" id="condition-new"> 
+							<input type="radio" class="form-check-input" name="condition" value="NEW" id="condition-new" 
+							<%= "NEW".equals(product.getCondition()) ? "checked" : "" %> />
 							<label for="condition-new">신규 제품</label>
 						</div>
 						
 						<div class="radio-item mx-5">
-							<input type="radio" class="form-check-input " name="condition" value="OLD" id="condition-old"> 
+							<input type="radio" class="form-check-input" name="condition" value="OLD" id="condition-old" 
+							<%= "OLD".equals(product.getCondition()) ? "checked" : "" %> />
 							<label for="condition-old">중고 제품</label>
 						</div>
 						
 						<div class="radio-item mx-5">
-							<input type="radio" class="form-check-input " name="condition" value="RE" id="condition-re"> 
+							<input type="radio" class="form-check-input" name="condition" value="RE" id="condition-re" 
+							<%= "RE".equals(product.getCondition()) ? "checked" : "" %> />
 							<label for="condition-re">재생 제품</label>
 						</div>
 					</div>
@@ -111,7 +131,13 @@
 		let radioCondition = document.querySelector('[value="' + condition +'"]');
 		radioCondition.checked = true
 	
+		function checkProduct() {
+			return true;
+		}
+		
+		
 	</script>	
+	
 
 </body>
 </html>

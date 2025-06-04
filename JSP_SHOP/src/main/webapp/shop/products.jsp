@@ -4,10 +4,22 @@
 <%@ page import="shop.dao.ProductRepository" %>
 <%@ page import="shop.dto.Product" %>
 <%@ include file="/layout/meta.jsp"%>
-
 <%
-    ProductRepository repo = new ProductRepository();
-    List<Product> products = repo.list();
+    request.setCharacterEncoding("UTF-8");
+
+    String keyword = request.getParameter("keyword");
+    if (keyword == null) keyword = "";
+
+    ProductRepository dao = new ProductRepository();
+    List<Product> products;
+
+    if (keyword.trim().isEmpty()) {
+        // 전체 출력
+        products = dao.list();
+    } else {
+        // 검색어 기반 출력
+        products = dao.list(keyword);
+    }
 %>
 
 <!DOCTYPE html>
@@ -21,7 +33,6 @@
 
 	<div class="px-4 py-5 my-5 text-center">
 		<h1 class="display-5 fw-bold text-body-emphasis">상품 목록</h1>
-		<div class="col-lg-6 mx-auto">
 			<p class="lead mb-4">쇼핑몰 상품 목록 입니다.</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 			
