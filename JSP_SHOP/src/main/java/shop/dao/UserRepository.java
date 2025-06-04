@@ -2,12 +2,26 @@ package shop.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import shop.dto.PersistentLogin;
 import shop.dto.User;
 
 public class UserRepository extends JDBConnection {
+	
+	private Map<String, User> users;
+
+	private static UserRepository instance = new UserRepository();
+	
+	public UserRepository() {
+		users = new HashMap<>();
+	}
+
+	public static UserRepository getInstance() {
+        return instance;
+    }
 	
 	/**
 	 * ResultSet → User 객체 매핑
@@ -310,6 +324,9 @@ public class UserRepository extends JDBConnection {
 	    return result;
 	}
 
+	public void save(User user) {
+	    users.put(user.getId(), user);
+	}
 
 }
 

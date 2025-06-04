@@ -51,7 +51,6 @@ function check(regExp, element, msg) {
 
 // 회원가입 아이디, 비밀번호, 비밀번호 확인, 이름 유효성 검사 함수
 function checkJoin() {
-	console.log("checkJoin 호출");
 	let form = document.joinForm
 	
 	// 아이디 : 첫 글자가 영문자 또는 한글
