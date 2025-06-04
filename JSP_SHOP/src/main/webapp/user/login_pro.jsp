@@ -16,11 +16,27 @@
 	User loginUser = userDAO.login(id, pw);
 	
 	// 로그인 실패
+	if (loginUser == null) {
+		response.sendRedirect("login.jsp?error=0");
+		return;
+	}
 	
 	// 로그인 성공
+	session.setAttribute("loginId", loginUser.getId());
+	
 	// - 세션에 아이디 등록
 	
 	// 아이디 저장
+	String rememberId = request.getParameter("remember-id");
+	if ("on".equals(rememberId)) {
+		Cookie rememberCookie = new Cookie("rememberId", URLEncoder.encode(id, "UTF-8"));
+		rememberCookie.setMaxAge(60 * 60 * 24 * 30); // 30일 유지
+		response.addCookie(rememberCookie);
+	} else {
+		Cookie rememberCookie = new Cookie("rememberId", "");
+		rememberCookie.setMaxAge(0);
+		response.addCookie(rememberCookie);
+	}
 	
 	// 자동 로그인
 	
