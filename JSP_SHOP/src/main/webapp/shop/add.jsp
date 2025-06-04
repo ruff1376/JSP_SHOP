@@ -5,23 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>add</title>
-
-<!-- bootstrap lib -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-
-<!-- material design icon -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<link href="/static/css/style.css" rel="stylesheet" />
-
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>
-
-
-
-
-	<jsp:include page="/layout/header.jsp" />
+	<jsp:include page="/layout/header.jsp"/>
 	
 	<div class="px-4 py-5 my-5 text-center">
 		<h1 class="display-5 fw-bold text-body-emphasis">상품 등록</h1>
@@ -107,11 +95,7 @@
 	<jsp:include page="/layout/footer.jsp" />
 	<jsp:include page="/layout/script.jsp" />
 	
-	
-	
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script> -->
-	<!-- 절대경로 -->
-<script src="/static/js/validation.js"></script>
+	<script src="/static/js/validation.js"></script>
 
 
 

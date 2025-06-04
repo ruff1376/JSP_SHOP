@@ -1,31 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="shop.dto.Product" %>
+<%@ page import="shop.dao.ProductRepository" %>
+<%@ include file="/layout/meta.jsp"%>
+<%
+    // 1. 요청 파라미터로 상품 ID 받기
+    String productId = request.getParameter("id");
+
+    // 2. DAO를 통해 상품 조회
+    ProductRepository repo = new ProductRepository();
+    Product product = repo.getProductById(productId);
+
+    if (product == null) {
+%>
+    <p>해당 상품 정보를 찾을 수 없습니다.</p>
+<%
+    return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- 사이트 맵 -->
-<link rel="sitemap" href="/static/sitemap.xml">
-
-
-
-
-	
-    
-<!-- bootstrap lib -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-<!-- Noto Sans font -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&display=swap">
-
-<!-- material design icon -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<link href="/static/css/style.css" rel="stylesheet" />
+<title>product</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
 </head>
-<body>  
-	<jsp:include page="/layout/header.jsp" />
+<body>
+	<jsp:include page="/layout/header.jsp"/>
 
 	<div class="px-4 py-5 my-5 text-center">
 		<h1 class="display-5 fw-bold text-body-emphasis">상품 정보</h1>
@@ -43,46 +45,24 @@
 		<div class="row">
 			<div class="col-md-6">
 				<!-- [NEW] 썸네일 이미지 요청하기 추가 -->
-				<img src="img?id=P100003" class="w-100 p-2" />
+				<img src="img?id=<%= product.getProductId() %>" class="w-100 p-2" />
 			</div>
 			<div class="col-md-6">
 				<h3 class="mb-5">HTML CSS JAVASCRIPT</h3>
-			 	<table class="table">
-			 		<colgroup>
-			 			<col width="120px" />
-			 			<col />
-			 		</colgroup>
-			 		<tr>
-			 			<td>상품ID :</td>
-			 			<td>P100003</td>
-			 		</tr>
-			 		<tr>
-			 			<td>제조사 :</td>
-			 			<td>알로하클래스</td>
-			 		</tr>
-			 		<tr>
-			 			<td>분류 :</td>
-			 			<td>강의</td>
-			 		</tr>
-			 		<tr>
-			 			<td>상태 :</td>
-			 			<td>NEW</td>
-			 		</tr>
-			 		<tr>
-			 			<td>재고 수 :</td>
-			 			<td>98</td>
-			 		</tr>
-			 		<tr>
-			 			<td>가격 :</td>
-			 			<td>15000</td>
-			 		</tr>
-				</table>
+			<table class="table">
+				<tr><td>상품ID :</td><td><%= product.getProductId() %></td></tr>
+				<tr><td>제조사 :</td><td><%= product.getManufacturer() %></td></tr>
+				<tr><td>분류 :</td><td><%= product.getCategory() %></td></tr>
+				<tr><td>상태 :</td><td><%= product.getCondition() %></td></tr>
+				<tr><td>재고 수 :</td><td><%= product.getUnitsInStock() %></td></tr>
+				<tr><td>가격 :</td><td><%= product.getUnitPrice() %> 원</td></tr>
+			</table>
 				<div class="mt-4">
-					<form name="addForm" action="./addCart.jsp" method="post">
+					<form name="addForm" action="<%= root %>/shop/cart_pro.jsp" method="post">
 						<input type="hidden" name="id" value="P100003" />
 						<div class="btn-box d-flex justify-content-end ">
 							<!-- [NEW] 장바구니 버튼 추가 -->
-							<a href="./cart.jsp" class="btn btn-lg btn-warning mx-3">장바구니</a>
+							<a href="<%= root %>/shop/cart.jsp" class="btn btn-lg btn-warning mx-3">장바구니</a>
 							
 							<!-- 페이지 이동 막기 :  href="javascript:;" -->			
 							<a href="javascript:;" class="btn btn-lg btn-success mx-3" onclick="addToCart()">주문하기</a>
@@ -106,7 +86,7 @@
 			
 		}
 		
-	</script>/head>
+	</script>
 <body>
 
 </body>
