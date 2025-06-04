@@ -4,23 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- 사이트 맵 -->
-<link rel="sitemap" href="/static/sitemap.xml">
-    
-<!-- bootstrap lib -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-<!-- Noto Sans font -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&display=swap">
-
-<!-- material design icon -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<link href="/static/css/style.css" rel="stylesheet" />
+<title>order</title>
+	<jsp:include page="/layout/meta.jsp" />
+	<jsp:include page="/layout/link.jsp" />
 </head>
-<body>   
-		<jsp:include page="/layout/header.jsp" />
+<body>
+	<jsp:include page="/layout/header.jsp"/>
 	
 	<div class="row m-0 mypage">
 		<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">

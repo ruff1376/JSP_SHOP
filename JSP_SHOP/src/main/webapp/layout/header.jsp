@@ -5,15 +5,20 @@
     
 <%
 	List<Product> cartList = (List<Product>) session.getAttribute("cartList");
-	int cartCount = cartList == null ? 0 : cartList.size();
+
+	int cartCount = 0; // 수량 총합을 구하기 위한 변수
+	if (cartList != null) {
+	    for (Product p : cartList) {
+	        cartCount += p.getQuantity(); // 각 상품의 수량을 누적
+	    }
+	}
 	
 	String root = request.getContextPath();
-	
 	String loginId = (String) session.getAttribute("loginId");
 	String keyword = request.getParameter("keyword");
 	keyword = keyword == null ? "" : keyword;
-	
 %>
+
 <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="<%= root %>">Home</a>
