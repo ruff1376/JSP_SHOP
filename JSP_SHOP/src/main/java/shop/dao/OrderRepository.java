@@ -8,11 +8,7 @@ import shop.dto.Product;
 
 public class OrderRepository extends JDBConnection {
 	
-	/**
-	 * 주문 등록
-	 * @param user
-	 * @return
-	 */
+	
 	public int insert(Order order) {
 		int result = 0;
 		String sql = "INSERT INTO `order` (ship_name, zip_code, country, address, date, order_pw, user_id, total_price, phone) "
@@ -39,10 +35,6 @@ public class OrderRepository extends JDBConnection {
 		return result;
 	}
 
-	/**
-	 * 최근 등록한 orderNo 
-	 * @return
-	 */
 	public int lastOrderNo() {
 		int orderNo = 0;
         String sql = "SELECT MAX(order_no) AS last_order_no FROM `order`";
@@ -60,12 +52,6 @@ public class OrderRepository extends JDBConnection {
         return orderNo;
 	}
 
-	
-	/**
-	 * 주문 내역 조회 - 회원
-	 * @param userId
-	 * @return
-	 */
 	public List<Product> list(String userId) {
 		List<Product> products = new ArrayList<>();
         String sql = "SELECT p.* FROM product p "
@@ -99,12 +85,6 @@ public class OrderRepository extends JDBConnection {
         return products;
 	}
 	
-	/**
-	 * 주문 내역 조회 - 비회원
-	 * @param phone
-	 * @param orderPw
-	 * @return
-	 */
 	public List<Product> list(String phone, String orderPw) {
 		List<Product> products = new ArrayList<>();
         String sql = "SELECT p.* FROM product p "
