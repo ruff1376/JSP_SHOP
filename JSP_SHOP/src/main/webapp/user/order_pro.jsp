@@ -11,19 +11,21 @@
     String phone = request.getParameter("phone");
     String orderPw = request.getParameter("orderPw");
 
-    OrderRepository orderDAO = new OrderRepository();
-    List<Product> orderList = orderDAO.list(phone, orderPw);
+ 	// 기존 세션값 제거
+ 	session.removeAttribute("orderList");
+ 	session.removeAttribute("orderPhone");
+ 	session.removeAttribute("orderPw");
 
-    if (orderList != null && !orderList.isEmpty()) {
-        session.setAttribute("orderList", orderList); // 주문 내역 저장
-        session.setAttribute("orderPhone", phone);    // 조회 확인을 위한 플래그
-        session.setAttribute("orderPw", orderPw);
-    } else {
-        session.removeAttribute("orderList");
-        session.setAttribute("orderPhone", phone);
-        session.setAttribute("orderPw", orderPw);
-    }
+ 	if (phone != null && orderPw != null && !phone.isEmpty() && !orderPw.isEmpty()) {
+ 		OrderRepository orderDAO = new OrderRepository();
+ 		List<Product> orderList = orderDAO.list(phone, orderPw);
+
+ 		if (orderList != null && !orderList.isEmpty()) {
+ 			session.setAttribute("orderList", orderList);
+ 		}
+ 		session.setAttribute("orderPhone", phone);  // 조회 여부 플래그
+ 		session.setAttribute("orderPw", orderPw);
+ 	}
 		
 	response.sendRedirect(root + "/user/order.jsp");
-
 %>
