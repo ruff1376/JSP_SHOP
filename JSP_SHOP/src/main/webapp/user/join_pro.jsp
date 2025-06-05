@@ -7,6 +7,7 @@
 <%@page import="shop.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/layout/meta.jsp" %>
     
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -41,9 +42,13 @@
 	user.setRegistDay(registDay);
 	
 	UserRepository userRepo = UserRepository.getInstance();
-	userRepo.save(user);
+	int result = userRepo.insert(user);
 
-	response.sendRedirect(request.getContextPath() + "/user/complete.jsp?msg=1");
+	if (result > 0) {
+		response.sendRedirect(root + "/user/complete.jsp?msg=1");
+	} else {
+		out.println("<script>alert('회원가입 실패!'); history.back();</script>");
+	}
 %>
     
     

@@ -6,23 +6,40 @@
 <%@page import="shop.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/layout/meta.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>Shop</title>
-	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
+	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
 	<% 
 
 		// ...
-	
+		String loginId = (String) session.getAttribute("loginId");
+		boolean login = (loginId != null && !loginId.isEmpty());
 	
 		// 주문 내역 목록을 세션에서 가져오기
+		OrderRepository orderDAO = new OrderRepository();
+		List<Product> orderList = new ArrayList<>();
+		String orderPhone = null;
+		String orderPw = null;
 		
 		// 회원인 경우
-		
+		if (login) {
+			orderList = orderDAO.list(loginId);
+		} else {
+			orderPhone = request.getParameter("phone");
+			orderPw = request.getParameter("orderPw");
+
+			if (orderPhone != null && orderPw != null &&
+				!orderPhone.isEmpty() && !orderPw.isEmpty()) {
+				orderList = orderDAO.list(orderPhone, orderPw);
+			}
+		}
+		int orderCount = orderList.size();
 		
 	%>
 	
