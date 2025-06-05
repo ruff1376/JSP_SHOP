@@ -2,8 +2,6 @@ package shop.dao;
 
 import java.io.FileReader;
 import java.io.Reader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
