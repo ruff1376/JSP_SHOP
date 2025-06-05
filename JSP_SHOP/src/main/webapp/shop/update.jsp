@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/layout/meta.jsp"%>
-<%@ page import="shop.dao.ProductRepository, shop.dto.Product" %>
+<%@ page import="shop.dao.ProductRepository" %>
+<%@ page import="shop.dto.Product" %>
 
 <%
     String productId = request.getParameter("id");
@@ -126,14 +127,18 @@
 	<jsp:include page="/layout/script.jsp" /> 
 	<script>
 		
-		// 상태 라디오 버튼 체크
-		let condition = 'NEW'
-		let radioCondition = document.querySelector('[value="' + condition +'"]');
-		radioCondition.checked = true
-	
-		function checkProduct() {
-			return true;
-		}
+    // 서버에서 가져온 상태값을 JS 변수로 설정
+    let condition = "<%= product.getCondition() %>";
+    
+    // 상태 라디오 버튼 중 해당하는 값 체크
+    let radioCondition = document.querySelector('[name="condition"][value="' + condition + '"]');
+    if (radioCondition) {
+        radioCondition.checked = true;
+    }
+
+    function checkProduct() {
+        return true;
+    }
 		
 		
 	</script>	

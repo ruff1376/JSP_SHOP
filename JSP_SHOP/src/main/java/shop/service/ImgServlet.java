@@ -54,6 +54,10 @@ public class ImgServlet extends HttpServlet {
 			String rootPath = context.getRealPath("/");
 			file = rootPath + "/" + file;
 		}
+		if (file.contains("upload")) { 
+			String rootPath = context.getRealPath("/");
+			file = rootPath + "/" + file;
+		}
 		
 		String ext = file.substring( file.lastIndexOf(".") + 1 ).toUpperCase();
 		System.out.println("확장자 : " + ext);
