@@ -96,8 +96,86 @@
 	<jsp:include page="/layout/script.jsp" />
 	
 	<script src="/static/js/validation.js"></script>
-
-
+	<script>
+		function checkProduct() {
+			let form = document.product;
+		
+			let productId = form.productId;
+			let name = form.name;
+			let unitPrice = form.unitPrice;
+			let unitsInStock = form.unitsInStock;
+			let description = form.description;
+			let manufacturer = form.manufacturer;
+			let category = form.category;
+			let condition = form.condition;
+		
+			let msg = '';
+		
+			// 상품 아이디 체크 - P숫자 6자리
+			let productIdCheck = /^P[0-9]{6}$/;
+			msg = '상품 아이디는 "P6자리" 로 입력해주세요';
+			if (!check(productIdCheck, productId, msg)) return false;
+		
+			// 상품명 체크 - 2글자 이상 20글자 이하
+			let nameCheck = /^.{2,20}$/;
+			msg = '상품명은 2~20자 이내로 입력해주세요';
+			if (!check(nameCheck, name, msg)) return false;
+		
+			// 가격 체크 - 숫자로 1글자 이상
+			let priceCheck = /^\d{1,}$/;
+			msg = '가격은 1글자 이상의 숫자로 입력해주세요';
+			if (!check(priceCheck, unitPrice, msg)) return false;
+		
+			// 재고 체크 - 숫자로 1글자 이상
+			let stockCheck = /^\d{1,}$/;
+			msg = '재고는 1글자 이상의 숫자로 입력해주세요';
+			if (!check(stockCheck, unitsInStock, msg)) return false;
+		
+			// 상세 정보 체크 - 5자 이상 필수
+			if (description.value.trim().length < 1) {
+				alert('상세 정보는 1자 이상 입력해주세요');
+				description.focus();
+				return false;
+			}
+		
+			// 제조사 체크 - 공백불가, 2~30자
+			let manufacturerCheck = /^.{2,30}$/;
+			msg = '제조사는 2~30자 이내로 입력해주세요';
+			if (!check(manufacturerCheck, manufacturer, msg)) return false;
+		
+			// 분류 체크 - 공백불가, 2~30자
+			let categoryCheck = /^.{2,30}$/;
+			msg = '분류는 2~30자 이내로 입력해주세요';
+			if (!check(categoryCheck, category, msg)) return false;
+		
+			// 상태 체크 - 라디오 버튼 선택 여부
+			let conditionChecked = false;
+			for (let i = 0; i < condition.length; i++) {
+				if (condition[i].checked) {
+					conditionChecked = true;
+					break;
+				}
+			}
+			if (!conditionChecked) {
+				alert('제품 상태를 선택해주세요');
+				return false;
+			}
+		
+			return true;
+		}
+		
+		// 공통 체크 함수 (기존 validation.js에 있음)
+		function check(regExp, input, msg) {
+			if (!regExp.test(input.value)) {
+				alert(msg);
+				input.focus();
+				return false;
+			}
+			return true;
+		}
+</script>
+	
+	
 
 </body>
 </html>
