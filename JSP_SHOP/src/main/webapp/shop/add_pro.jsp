@@ -19,7 +19,7 @@
     Product product = new Product();
 
     try {
-        // 최신 방식: 빌더 패턴 사용
+        
         DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
         JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
         upload.setHeaderCharset(StandardCharsets.UTF_8);
@@ -47,10 +47,13 @@
                 if (!fileName.isEmpty()) {
                     String filePath = uploadPath + File.separator + fileName;
                     File storeFile = new File(filePath);
-                    item.write(storeFile.toPath()); // write(Path) 사용
-                    product.setFile(fileName); // DB에 파일명 저장
+                    item.write(storeFile.toPath()); // 파일 저장
+
+                    // DB에는 상대 경로로 저장 (ImgServlet에서 이 경로를 사용할 수 있게)
+                    product.setFile("upload/" + fileName);
                 }
             }
+
         }
 
         // DB 저장
