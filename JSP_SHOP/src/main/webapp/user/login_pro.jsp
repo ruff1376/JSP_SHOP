@@ -49,6 +49,7 @@
         response.addCookie(autoCookie);
     }
 	
+    
 	// 로그인 성공 페이지로 이동
 	response.sendRedirect("complete.jsp?msg=0");		
 

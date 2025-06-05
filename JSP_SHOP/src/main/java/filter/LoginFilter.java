@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import shop.dao.UserRepository;
+import shop.dto.User;
 
 
 @WebFilter("/LoginFilter")
@@ -47,14 +49,23 @@ public class LoginFilter extends HttpFilter implements Filter {
 	            }
 	        }
 	        
-	        // rememberMe, token 값 확인 및 둘다 존재 시, 자동 로그인 
 	        if (rememberMe != null && token != null) {
 	            String loginId = getLoginIdByToken(token, request);
 	            if (loginId != null) {
-	                HttpSession session = request.getSession();
-	                session.setAttribute("loginId", loginId);
+	                // ✅ UserRepository를 통해 사용자 정보 조회
+	                UserRepository userDAO = UserRepository.getInstance();
+	                User loginUser = userDAO.getUserById(loginId);
+
+	                if (loginUser != null) {
+	                    HttpSession session = request.getSession();
+	                    session.setAttribute("loginId", loginUser.getId());
+	                    session.setAttribute("loginUser", loginUser);
+	                    session.setAttribute("userId", loginUser.getId()); // 로그인 정보 확인
+	                }
 	            }
 	        }
+
+
 	        // 다음 필터 or 서블릿 전달
 	        chain.doFilter(request, response);
 	    }
@@ -78,7 +89,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 	            rs = pstmt.executeQuery();
 
 	            if (rs.next()) {
-	                loginId = rs.getString("login_id");
+	                loginId = rs.getString("loginId");
 	            }
 
 	        } catch (Exception e) {
