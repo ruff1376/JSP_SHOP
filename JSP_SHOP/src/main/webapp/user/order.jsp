@@ -39,7 +39,7 @@
 				orderList = orderDAO.list(orderPhone, orderPw);
 			}
 		}
-		int orderCount = orderList.size();
+		int orderCount = (orderList != null) ? orderList.size() : 0;
 		
 	%>
 	
