@@ -2,22 +2,14 @@ package shop.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import shop.dto.PersistentLogin;
 import shop.dto.User;
 
 public class UserRepository extends JDBConnection {
-	
-	private Map<String, User> users;
 
 	private static UserRepository instance = new UserRepository();
-	
-	public UserRepository() {
-		users = new HashMap<>();
-	}
 
 	public static UserRepository getInstance() {
         return instance;
@@ -132,17 +124,16 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int update(User user) {
 		int result = 0;
-	    String sql = "UPDATE user SET password = ?, name = ?, gender = ?, birth = ?, mail = ?, phone = ?, address = ? WHERE id = ?";
+	    String sql = "UPDATE user SET name = ?, gender = ?, birth = ?, mail = ?, phone = ?, address = ? WHERE id = ?";
 	    try {
 	        psmt = con.prepareStatement(sql);
-	        psmt.setString(1, user.getPassword());
-	        psmt.setString(2, user.getName());
-	        psmt.setString(3, user.getGender());
-	        psmt.setString(4, user.getBirth());
-	        psmt.setString(5, user.getMail());
-	        psmt.setString(6, user.getPhone());
-	        psmt.setString(7, user.getAddress());
-	        psmt.setString(8, user.getId());
+	        psmt.setString(1, user.getName());
+	        psmt.setString(2, user.getGender());
+	        psmt.setString(3, user.getBirth());
+	        psmt.setString(4, user.getMail());
+	        psmt.setString(5, user.getPhone());
+	        psmt.setString(6, user.getAddress());
+	        psmt.setString(7, user.getId());
 
 	        result = psmt.executeUpdate();
 	    } catch (Exception e) {
@@ -322,10 +313,6 @@ public class UserRepository extends JDBConnection {
 	    }
 	    System.out.println("자동 로그인 정보 " + result + "개의 데이터가 삭제되었습니다.");
 	    return result;
-	}
-
-	public void save(User user) {
-	    users.put(user.getId(), user);
 	}
 
 }

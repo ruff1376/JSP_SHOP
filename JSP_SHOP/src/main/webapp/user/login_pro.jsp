@@ -7,6 +7,7 @@
     pageEncoding="UTF-8"%>
     
 <%
+	request.setCharacterEncoding("UTF-8");
 	
 	String id = request.getParameter("id");
 	String pw = request.getParameter("pw");
@@ -22,9 +23,9 @@
 	}
 	
 	// 로그인 성공
-	session.setAttribute("loginId", loginUser.getId());
-	
 	// - 세션에 아이디 등록
+	session.setAttribute("loginId", loginUser.getId());
+	session.setAttribute("loginUser", loginUser);
 	
 	// 아이디 저장
 	String rememberId = request.getParameter("remember-id");
@@ -38,9 +39,15 @@
 		response.addCookie(rememberCookie);
 	}
 	
-	// 자동 로그인
-	
-	// 쿠키 전달
+	// 자동 로그인, 쿠키 전달
+	String autoLogin = request.getParameter("auto-login");
+    if ("on".equals(autoLogin)) {
+    	String token = userDAO.updateToken(loginUser.getId());
+        Cookie autoCookie = new Cookie("autoLoginToken", token);
+        autoCookie.setMaxAge(60 * 60 * 24 * 30); // 30일 유지
+        autoCookie.setPath("/"); // 전체 경로에서 유효
+        response.addCookie(autoCookie);
+    }
 	
 	// 로그인 성공 페이지로 이동
 	response.sendRedirect("complete.jsp?msg=0");		
