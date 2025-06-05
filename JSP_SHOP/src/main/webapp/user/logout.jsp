@@ -7,8 +7,8 @@
     if (cookies != null) {
         for (Cookie cookie : cookies) {
             if ("autoLoginToken".equals(cookie.getName())) {
-                cookie.setMaxAge(0);  // 삭제
-                cookie.setPath("/");  // 경로 일치 필요
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
                 response.addCookie(cookie);
             }
         }

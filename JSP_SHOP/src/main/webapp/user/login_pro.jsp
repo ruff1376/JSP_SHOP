@@ -45,7 +45,7 @@
     	String token = userDAO.updateToken(loginUser.getId());
         Cookie autoCookie = new Cookie("autoLoginToken", token);
         autoCookie.setMaxAge(60 * 60 * 24 * 30); // 30일 유지
-        autoCookie.setPath("/"); // 전체 경로에서 유효
+        autoCookie.setPath("/");
         response.addCookie(autoCookie);
     }
 	

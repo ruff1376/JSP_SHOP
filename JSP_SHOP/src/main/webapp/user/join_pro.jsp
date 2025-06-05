@@ -41,8 +41,8 @@
 	user.setAddress(address);
 	user.setRegistDay(registDay);
 	
-	UserRepository userRepo = UserRepository.getInstance();
-	int result = userRepo.insert(user);
+	UserRepository userDAO = UserRepository.getInstance();
+	int result = userDAO.insert(user);
 
 	if (result > 0) {
 		response.sendRedirect(root + "/user/complete.jsp?msg=1");
