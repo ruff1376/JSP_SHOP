@@ -48,7 +48,7 @@
 				<img src="img?id=<%= product.getProductId() %>" class="w-100 p-2" />
 			</div>
 			<div class="col-md-6">
-				<h3 class="mb-5">HTML CSS JAVASCRIPT</h3>
+				<h3 class="mb-5"><%= product.getName() %></h3>
 			<table class="table">
 				<tr><td>상품ID :</td><td><%= product.getProductId() %></td></tr>
 				<tr><td>제조사 :</td><td><%= product.getManufacturer() %></td></tr>
@@ -59,7 +59,7 @@
 			</table>
 				<div class="mt-4">
 					<form name="addForm" action="<%= root %>/shop/cart_pro.jsp" method="post">
-						<input type="hidden" name="id" value="P100003" />
+						<input type="hidden" name="id" value="<%= product.getProductId() %>" />
 						<div class="btn-box d-flex justify-content-end ">
 							<!-- [NEW] 장바구니 버튼 추가 -->
 							<a href="<%= root %>/shop/cart.jsp" class="btn btn-lg btn-warning mx-3">장바구니</a>
@@ -78,13 +78,15 @@
 	
 		// 장바구니 추가
 		function addToCart() {
-			if( confirm("상품을 장바구니에 추가하시겠습니까?") ) {
-				document.addForm.submit()
-			} else {
-				document.addForm.reset()
-			}
-			
+		    if (confirm("상품을 장바구니에 추가하고 바로 주문하시겠습니까?")) {
+		        document.addForm.target = "_self";
+		        document.addForm.action = "<%= root %>/shop/cart_pro.jsp?redirect=order";
+		        document.addForm.submit();
+		    } else {
+		        document.addForm.reset();
+		    }
 		}
+
 		
 	</script>
 <body>
