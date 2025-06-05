@@ -15,9 +15,7 @@
 	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
-	<% 
-
-		// ...
+	<%
 		String loginId = (String) session.getAttribute("loginId");
 		boolean login = (loginId != null && !loginId.isEmpty());
 	

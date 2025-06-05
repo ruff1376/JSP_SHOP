@@ -54,10 +54,10 @@ public class OrderRepository extends JDBConnection {
 
 	public List<Product> list(String userId) {
 		List<Product> products = new ArrayList<>();
-        String sql = "SELECT p.* FROM product p "
-                   + "JOIN product_io io ON p.product_id = io.product_id "
-                   + "JOIN `order` o ON io.order_no = o.order_no "
-                   + "WHERE o.user_id = ?";
+		String sql = "SELECT o.order_no, io.amount, p.* FROM product p "
+		           + "JOIN product_io io ON p.product_id = io.product_id "
+		           + "JOIN `order` o ON io.order_no = o.order_no "
+		           + "WHERE o.user_id = ?";
 
         try {
             psmt = con.prepareStatement(sql);
@@ -66,6 +66,8 @@ public class OrderRepository extends JDBConnection {
 
             while (rs.next()) {
                 Product product = new Product();
+                product.setOrderNo(rs.getInt("order_no"));
+    			product.setQuantity(rs.getInt("amount"));
                 product.setProductId(rs.getString("product_id"));
                 product.setName(rs.getString("name"));
                 product.setUnitPrice(rs.getInt("unit_price"));
@@ -87,10 +89,10 @@ public class OrderRepository extends JDBConnection {
 	
 	public List<Product> list(String phone, String orderPw) {
 		List<Product> products = new ArrayList<>();
-        String sql = "SELECT p.* FROM product p "
-                   + "JOIN product_io io ON p.product_id = io.product_id "
-                   + "JOIN `order` o ON io.order_no = o.order_no "
-                   + "WHERE o.phone = ? AND o.order_pw = ?";
+		String sql = "SELECT o.order_no, io.amount, p.* FROM product p "
+		           + "JOIN product_io io ON p.product_id = io.product_id "
+		           + "JOIN `order` o ON io.order_no = o.order_no "
+		           + "WHERE o.phone = ? AND o.order_pw = ?";
 
         try {
             psmt = con.prepareStatement(sql);
@@ -100,6 +102,8 @@ public class OrderRepository extends JDBConnection {
 
             while (rs.next()) {
                 Product product = new Product();
+                product.setOrderNo(rs.getInt("order_no"));
+    			product.setQuantity(rs.getInt("amount"));
                 product.setProductId(rs.getString("product_id"));
                 product.setName(rs.getString("name"));
                 product.setUnitPrice(rs.getInt("unit_price"));
