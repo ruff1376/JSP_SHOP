@@ -89,16 +89,20 @@
 		            </tr>
 		        </table>
 		
-		        <%
-				    String queryString = "";
-				    if (userId != null) {
-				        queryString = "?userId=" + userId;
-				    } else if (phone != null && orderPw != null) {
-				        queryString = "?phone=" + phone + "&orderPw=" + orderPw;
-				    }
-				%>
+
+<%-- 		        <% --%>
+<!-- 				    String queryString = ""; -->
+<!-- 				    if (userId != null) { -->
+<!-- 				        queryString = "?userId=" + userId; -->
+<!-- 				    } else if (phone != null && orderPw != null) { -->
+<!-- 				        queryString = "?phone=" + phone + "&orderPw=" + orderPw; -->
+<!-- 				    } -->
+<%-- 				%> --%>
+<!-- 				<div class="btn-box d-flex justify-content-center"> -->
+<%-- 				    <a href="<%= root %>/user/order.jsp<%= queryString %>" class="btn btn-primary btn-lg px-4 gap-3">주문내역</a> --%>
+<!-- 				</div> -->
 				<div class="btn-box d-flex justify-content-center">
-				    <a href="<%= root %>/user/order.jsp<%= queryString %>" class="btn btn-primary btn-lg px-4 gap-3">주문내역</a>
+				    <a href="<%= root %>/user/order.jsp" class="btn btn-primary btn-lg px-4 gap-3">주문내역</a>
 				</div>
 		    </div>
 		</div>
