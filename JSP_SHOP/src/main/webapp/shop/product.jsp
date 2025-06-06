@@ -17,6 +17,10 @@
 <%
     return;
     }
+
+    // ✅ 재고 + 장바구니 수량 계산
+    long totalStock = product.getUnitsInStock() + product.getQuantity();
+    boolean outOfStock = (totalStock == 0);
 %>
 <!DOCTYPE html>
 <html>
@@ -38,13 +42,11 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 상품 정보 영역 -->
-	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
-				<!-- [NEW] 썸네일 이미지 요청하기 추가 -->
 				<img src="img?id=<%= product.getProductId() %>" class="w-100 p-2" />
 			</div>
 			<div class="col-md-6">
@@ -54,29 +56,35 @@
 				<tr><td>제조사 :</td><td><%= product.getManufacturer() %></td></tr>
 				<tr><td>분류 :</td><td><%= product.getCategory() %></td></tr>
 				<tr><td>상태 :</td><td><%= product.getCondition() %></td></tr>
-				<tr><td>재고 수 :</td><td><%= product.getUnitsInStock() %></td></tr>
+				<tr>
+					<td>재고 수 :</td>
+					<td><%= outOfStock ? "품절" : totalStock %></td>
+				</tr>
 				<tr><td>가격 :</td><td><%= product.getUnitPrice() %> 원</td></tr>
 			</table>
+
 				<div class="mt-4">
 					<form name="addForm" action="<%= root %>/shop/cart_pro.jsp" method="post">
 						<input type="hidden" name="id" value="<%= product.getProductId() %>" />
-						<div class="btn-box d-flex justify-content-end ">
-							<!-- [NEW] 장바구니 버튼 추가 -->
+						<div class="btn-box d-flex justify-content-end">
 							<a href="<%= root %>/shop/cart.jsp" class="btn btn-lg btn-warning mx-3">장바구니</a>
 							
-							<!-- 페이지 이동 막기 :  href="javascript:;" -->			
-							<a href="javascript:;" class="btn btn-lg btn-success mx-3" onclick="addToCart()">주문하기</a>
+							<% if (outOfStock) { %>
+								<button class="btn btn-lg btn-secondary mx-3" disabled>주문 불가 (품절)</button>
+							<% } else { %>
+								<a href="javascript:;" class="btn btn-lg btn-success mx-3" onclick="addToCart()">주문하기</a>
+							<% } %>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<jsp:include page="/layout/footer.jsp" />
 	<jsp:include page="/layout/script.jsp" /> 
+
 	<script>
-	
-		// 장바구니 추가
 		function addToCart() {
 		    if (confirm("상품을 장바구니에 추가하고 바로 주문하시겠습니까?")) {
 		        document.addForm.target = "_self";
@@ -86,10 +94,6 @@
 		        document.addForm.reset();
 		    }
 		}
-
-		
 	</script>
-<body>
-
 </body>
 </html>
